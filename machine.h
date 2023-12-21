@@ -25,11 +25,6 @@
 #define GB_SOUND_CLOCK_DIVIDER (GBA_CLOCK_RATE / GB_CLOCK_RATE)
 
 
-#define MUSIC_TASK_NONE 0
-#define MUSIC_TASK_PLAY 1
-#define MUSIC_TASK_STOP 2
-
-
 
 typedef struct {
 	gb_sound_t gbs;
