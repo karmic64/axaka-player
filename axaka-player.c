@@ -103,9 +103,11 @@ const char * get_gb_sound_period_note(unsigned period) {
 	double freq = (double)GB_PULSE_CLOCK_RATE / (0x800 - period) / 8.0;
 	// -4 to start at C-1 instead of A-0
 	double note_full = 12.0 * log2(freq / 440.0) + 49.0 - 4.0;
+	// not used, but can't pass NULL to modf
+	double note_int;
 	
 	int note = round(note_full);
-	int cents = round(modf(note_full, NULL) * 100.0);
+	int cents = round(modf(note_full, &note_int) * 100.0);
 	if (cents >= 50) {
 		cents -= 100;
 	}
