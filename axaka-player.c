@@ -137,12 +137,12 @@ void render_axaka_sequencer(SDL_Renderer * renderer, axaka_sequencer_t * asq, un
 		sprintf(str,
 			"Speed: %06X   "
 			"Ticks: %02X   "
-			"Data offset: %06X   "
-			"Loop offset: %06X",
+			"Data offset: %06tX   "
+			"Loop offset: %06tX",
 			asq->tick_rate,
 			asq->tick_count,
-			(unsigned)(asq->data - asq->data_start),
-			(unsigned)(asq->data_loop - asq->data_start)
+			asq->data - asq->data_start,
+			asq->data_loop - asq->data_start
 			);
 		stringColor(renderer, x, y + 3*CHAR_HEIGHT, str, TEXT_COLOR);
 	} else if (asq->data_start) {
@@ -159,11 +159,11 @@ void render_axaka_instrument(SDL_Renderer * renderer, axaka_sequencer_t * asq, a
 	char str[STR_BUF_SIZE];
 	if (ins) {
 		sprintf(str,
-			"Instrument: %02X   "
+			"Instrument: %02tX   "
 			"Length: %06X   "
 			"Loop: %06X   "
 			"Rate: %06X",
-			(unsigned)(ins - asq->inst),
+			ins - asq->inst,
 			ins->length,
 			ins->loop_length,
 			ins->rate
