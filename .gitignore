@@ -1,0 +1,4 @@
+*.obj
+*.dep
+*.exe
+axaka-player
