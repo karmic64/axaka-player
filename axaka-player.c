@@ -28,9 +28,12 @@ void machine_audio_callback(void * userdata, Uint8 * stream, int len) {
 	machine_dump_audio_buffer(m, buf, samples);
 	
 	// signal main
-	SDL_Event e;
-	e.type = m->ready_event;
-	SDL_PushEvent(&e);
+	// only do it if the event is not in the queue (to avoid unresponsiveness when lagging)
+	if (!SDL_HasEvent(m->ready_event)) {
+		SDL_Event e;
+		e.type = m->ready_event;
+		SDL_PushEvent(&e);
+	}
 }
 
 
