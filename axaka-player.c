@@ -132,14 +132,14 @@ void render_axaka_sequencer(SDL_Renderer * renderer, axaka_sequencer_t * asq, un
 	char str[STR_BUF_SIZE];
 	
 	// header
-	sprintf(str, "Now playing: %s", asq->song_name ? asq->song_name : "<none>");
+	snprintf(str, STR_BUF_SIZE, "Now playing: %s", asq->song_name ? asq->song_name : "<none>");
 	stringColor(renderer, x, y, str, TEXT_COLOR);
-	sprintf(str, "Instrument file: %s", asq->inst_name ? asq->inst_name : "<none>");
+	snprintf(str, STR_BUF_SIZE, "Instrument file: %s", asq->inst_name ? asq->inst_name : "<none>");
 	stringColor(renderer, x, y + 1*CHAR_HEIGHT, str, TEXT_COLOR);
 	
 	// song playback
 	if (asq->data_start && asq->data) {
-		sprintf(str,
+		snprintf(str, STR_BUF_SIZE,
 			"Speed: %06X   "
 			"Ticks: %02X   "
 			"Data offset: %06tX   "
@@ -163,7 +163,7 @@ void render_axaka_sequencer(SDL_Renderer * renderer, axaka_sequencer_t * asq, un
 void render_axaka_instrument(SDL_Renderer * renderer, axaka_sequencer_t * asq, axaka_instrument_t * ins, unsigned x, unsigned y) {
 	char str[STR_BUF_SIZE];
 	if (ins) {
-		sprintf(str,
+		snprintf(str, STR_BUF_SIZE,
 			"Instrument: %02tX   "
 			"Length: %06X   "
 			"Loop: %06X   "
@@ -190,7 +190,7 @@ void render_axaka_track(SDL_Renderer * renderer, axaka_sequencer_t * asq, unsign
 	axaka_channel_t * ch = &asq->as->ch[ix];
 	
 	// header
-	sprintf(str, "Sample channel %u:", ix);
+	snprintf(str, STR_BUF_SIZE, "Sample channel %u:", ix);
 	stringColor(renderer, x, y, str, get_time_fade_color(tr->note_time));
 	
 	// instrument
@@ -199,7 +199,7 @@ void render_axaka_track(SDL_Renderer * renderer, axaka_sequencer_t * asq, unsign
 	// sample playback
 	unsigned main_color = ch->sample_offset == -1u ? INACTIVE_COLOR : TEXT_COLOR;
 	
-	sprintf(str,
+	snprintf(str, STR_BUF_SIZE,
 		"Sample offset: %06X   "
 		"Current rate: %06X   "
 		"Note: %c%c%u (%02X)   "
@@ -212,7 +212,7 @@ void render_axaka_track(SDL_Renderer * renderer, axaka_sequencer_t * asq, unsign
 	stringColor(renderer, x + CHAR_WIDTH, y + 2*CHAR_HEIGHT, str, main_color);
 	
 	// effects
-	sprintf(str,
+	snprintf(str, STR_BUF_SIZE,
 		"Detune: %02X   "
 		"Volume slide rate: %06X   "
 		"Pitch slide rate: %06X",
@@ -250,7 +250,7 @@ void render_axaka_percussion(SDL_Renderer * renderer, axaka_sequencer_t * asq, u
 			unsigned xx = x + (16 * CHAR_WIDTH) +
 			(ix * ((AXAKA_MAX_PERCUSSION * 3 + 2) * CHAR_WIDTH)) +
 			(px * 3 * CHAR_WIDTH);
-			sprintf(str, "%02X", asq->percussion_tbl[ix][px]);
+			snprintf(str, STR_BUF_SIZE, "%02X", asq->percussion_tbl[ix][px]);
 			stringColor(renderer, xx, y, str, px == current_px ? color : INACTIVE_COLOR);
 		}
 	}
@@ -288,7 +288,7 @@ void render_gb_sound_panning(SDL_Renderer * renderer, unsigned panning, unsigned
 
 void render_gb_sound_length_counter(SDL_Renderer * renderer, gb_sound_length_counter_t * lc, unsigned x, unsigned y) {
 	char str[STR_BUF_SIZE];
-	sprintf(str,
+	snprintf(str, STR_BUF_SIZE,
 		"Length: %03X",
 		lc->initial);
 	stringColor(renderer, x, y, str, lc->enable ? TEXT_COLOR : INACTIVE_COLOR);
@@ -298,7 +298,7 @@ void render_gb_sound_length_counter(SDL_Renderer * renderer, gb_sound_length_cou
 
 void render_gb_sound_sweep(SDL_Renderer * renderer, gb_sound_sweep_t * sw, unsigned x, unsigned y) {
 	char str[STR_BUF_SIZE];
-	sprintf(str,
+	snprintf(str, STR_BUF_SIZE,
 		"Sweep shift: %X   "
 		"Sweep direction: %s   "
 		"Sweep speed: %X   ",
@@ -312,7 +312,7 @@ void render_gb_sound_sweep(SDL_Renderer * renderer, gb_sound_sweep_t * sw, unsig
 
 void render_gb_sound_envelope(SDL_Renderer * renderer, gb_sound_envelope_t * env, unsigned x, unsigned y) {
 	char str[STR_BUF_SIZE];
-	sprintf(str,
+	snprintf(str, STR_BUF_SIZE,
 		"NRx2: %02X   "
 		"Env initial: %X   "
 		"Env direction: %s   "
@@ -328,7 +328,7 @@ void render_gb_sound_envelope(SDL_Renderer * renderer, gb_sound_envelope_t * env
 
 void render_gb_sound_pulse(SDL_Renderer * renderer, gb_sound_pulse_t * pul, unsigned x, unsigned y, unsigned color) {
 	char str[STR_BUF_SIZE];
-	sprintf(str,
+	snprintf(str, STR_BUF_SIZE,
 		"Volume: %X   "
 		"Duty: %X   "
 		"Period: %03X (%s)",
@@ -342,7 +342,7 @@ void render_gb_sound_pulse(SDL_Renderer * renderer, gb_sound_pulse_t * pul, unsi
 
 void render_gb_sound_wave(SDL_Renderer * renderer, gb_sound_wave_t * wav, unsigned x, unsigned y, unsigned color) {
 	char str[STR_BUF_SIZE];
-	sprintf(str,
+	snprintf(str, STR_BUF_SIZE,
 		"Volume: %X   "
 		"Period: %03X (%s)",
 		wav->volume,
@@ -362,7 +362,7 @@ void render_gb_sound_wave(SDL_Renderer * renderer, gb_sound_wave_t * wav, unsign
 
 void render_gb_sound_noise(SDL_Renderer * renderer, gb_sound_noise_t * noi, unsigned x, unsigned y, unsigned color) {
 	char str[STR_BUF_SIZE];
-	sprintf(str,
+	snprintf(str, STR_BUF_SIZE,
 		"Volume: %X   "
 		"Period: %03X   "
 		"Mode: %X",
